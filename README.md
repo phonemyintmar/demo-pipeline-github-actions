@@ -6,7 +6,7 @@ This repository demonstrates a sample CI/CID pipeline with different features us
 
 ## Features
 ### Continuous Integration
->Automated testing and building artifacts on each push or pull requests and necessary events. 
+Automated testing and building artifacts on each push or pull requests and necessary events. 
 ### Continuous Deployment
 >Automatic deployment to different environment (development, staging, production) on successful builds.
 ### Code Quality
