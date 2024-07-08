@@ -1,0 +1,49 @@
+name: Interactive debug with tmate
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+        
+    - name: Install dependencies
+      run: npm install
+
+    - name: Start tmat session
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y tmate
+        tmate -S /tmp/tmate.sock new-session -d
+        tmate -S /tmp/tmate.sock wait tmate-ready
+        echo "Run this command to connect to the session:"
+        tmate -S /tmp/tmate.sock display -p '#{tmate_ssh}'
+        echo "Or this command for a web-based interface:"
+        tmate -S /tmp/tmate.sock display -p '#{tmate_web}'
+      continue-on-error: true
+
+    - name: Debugging pause
+      run: |
+        echo "Pausing for debugging. Please connect to the session."
+        sleep 1h
+      timeout-minutes: 60
+
+    - name: End tmat session
+      run: |
+        tmate kill-session
