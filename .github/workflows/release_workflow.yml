@@ -105,4 +105,4 @@ jobs:
 
     steps:
       - name: Send Telegram Notification
-        run: curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} -d text="The workflow for Development_pipeline of ${GITHUB_REPOSITORY} has failed. Please check the logs for details."
+        run: curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} -d text="The workflow for release of ${GITHUB_REPOSITORY} has failed. Please check the logs for details."
